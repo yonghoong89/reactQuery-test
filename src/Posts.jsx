@@ -6,7 +6,7 @@ const maxPostPage = 10;
 
 async function fetchPosts(currentPage) {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${currentPage+1}`
+    `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${currentPage + 1}`
   );
   return response.json();
 }
@@ -18,27 +18,27 @@ export function Posts() {
 
   // replace with useQuery
   const { data, isError, error, isLoading } = useQuery(
-    ["posts",currentPage],
+    ["posts", currentPage],
     () => fetchPosts(currentPage),
     {
-      staleTime:2000,
-      keepPreviousData:true,
+      staleTime: 2000,
+      keepPreviousData: true,
     }
   );
 
-  useEffect(()=>{
-    if(currentPage < maxPostPage) {
-      const nextPage = currentPage+1;
-      queryClient.prefetchQuery(["posts",nextPage], () => fetchPosts(nextPage));
+  useEffect(() => {
+    if (currentPage < maxPostPage) {
+      const nextPage = currentPage + 1;
+      queryClient.prefetchQuery(["posts", nextPage], () => fetchPosts(nextPage));
     }
-  },[currentPage, queryClient])
+  }, [currentPage, queryClient])
 
   const handleNextClick = () => {
-    setCurrentPage((prev)=>prev+1)
+    setCurrentPage((prev) => prev + 1)
   }
 
   const handlePrevClick = () => {
-    setCurrentPage((prev)=>prev-1)
+    setCurrentPage((prev) => prev - 1)
   }
 
   if (isLoading) return <h3>Loading...</h3>;
@@ -64,11 +64,11 @@ export function Posts() {
         ))}
       </ul>
       <div className="pages">
-        <button disabled={currentPage<=0} onClick={handlePrevClick}>
+        <button disabled={currentPage <= 0} onClick={handlePrevClick}>
           Previous page
         </button>
         <span>Page {currentPage + 1}</span>
-        <button disabled={currentPage>=maxPostPage-1} onClick={handleNextClick}>
+        <button disabled={currentPage >= maxPostPage - 1} onClick={handleNextClick}>
           Next page
         </button>
       </div>

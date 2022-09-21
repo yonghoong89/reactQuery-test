@@ -49,7 +49,7 @@ export function Posts() {
         ))}
       </ul>
       <div className="pages">
-        <button disabled={currentPage<=1} onClick={handlePrevClick}>
+        <button disabled={currentPage<=0} onClick={handlePrevClick}>
           Previous page
         </button>
         <span>Page {currentPage + 1}</span>
